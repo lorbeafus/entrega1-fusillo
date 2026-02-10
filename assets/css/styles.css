@@ -369,7 +369,7 @@ h1 {
 .historial-total {
   margin-top: 15px;
   padding: 12px;
-  background: linear-gradient(135deg, #e8d865 0%, #e8d865 100%);
+  background: linear-gradient(135deg, #2f2e27 0%, #e8d865 100%);
   color: white;
   border-radius: 8px;
   text-align: center;
@@ -377,6 +377,66 @@ h1 {
   font-weight: 700;
 }
 
+.resumen-total {
+  margin-top: 30px;
+  padding: 25px;
+  background: linear-gradient(135deg, #2f2e27 0%, #e8d865 100%);
+  border-radius: 15px;
+  color: white;
+  text-align: center;
+}
+
+.resumen-total-cantidad {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.resumen-total-precio {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.btn-eliminar {
+  margin-top: 10px;
+  padding: 8px 15px;
+  background: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.btn-eliminar:hover {
+  background: #ee5a6f;
+}
+
+.carrito-vacio-mensaje {
+  text-align: center;
+  color: #999;
+  font-size: 1.2rem;
+  padding: 40px 20px;
+}
+
+.carrito-vacio-submensaje {
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.info-item-nombre {
+  font-weight: 600;
+}
+
+.info-item-precio {
+  font-weight: 700;
+  color: #e8d865;
+}
+
+.btn-group-spaced {
+  margin-top: 20px;
+}
 
 @media (max-width: 768px) {
   .container {

@@ -10,10 +10,10 @@ function mostrarCarrito() {
     const mensajeVacio = document.createElement('div');
     mensajeVacio.className = 'carrito-vacio';
     mensajeVacio.innerHTML = `
-      <p style="text-align: center; color: #999; font-size: 1.2rem; padding: 40px 20px;">
+      <p class="carrito-vacio-mensaje">
         🛒 No hay presupuestos en el carrito aún.
       </p>
-      <p style="text-align: center; color: #666; margin-bottom: 20px;">
+      <p class="carrito-vacio-submensaje">
         Crea tu primer presupuesto para verlo aquí.
       </p>
     `;
@@ -51,23 +51,6 @@ function mostrarCarrito() {
     const btnEliminar = document.createElement('button');
     btnEliminar.className = 'btn-eliminar';
     btnEliminar.textContent = 'Eliminar';
-    btnEliminar.style.marginTop = '10px';
-    btnEliminar.style.padding = '8px 15px';
-    btnEliminar.style.background = '#ff4757';
-    btnEliminar.style.color = 'white';
-    btnEliminar.style.border = 'none';
-    btnEliminar.style.borderRadius = '5px';
-    btnEliminar.style.cursor = 'pointer';
-    btnEliminar.style.fontSize = '0.9rem';
-    btnEliminar.style.transition = 'background 0.3s ease';
-    
-    btnEliminar.addEventListener('mouseenter', () => {
-      btnEliminar.style.background = '#ee5a6f';
-    });
-    
-    btnEliminar.addEventListener('mouseleave', () => {
-      btnEliminar.style.background = '#ff4757';
-    });
     
     const indice = carrito.indexOf(presupuesto);
     btnEliminar.addEventListener('click', () => eliminarPresupuesto(indice));
@@ -86,15 +69,9 @@ function mostrarCarrito() {
   
   const resumenTotal = document.createElement('div');
   resumenTotal.className = 'resumen-total';
-  resumenTotal.style.marginTop = '30px';
-  resumenTotal.style.padding = '25px';
-  resumenTotal.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-  resumenTotal.style.borderRadius = '15px';
-  resumenTotal.style.color = 'white';
-  resumenTotal.style.textAlign = 'center';
   resumenTotal.innerHTML = `
-    <div style="font-size: 1.1rem; margin-bottom: 10px;">Total de Presupuestos: ${carrito.length}</div>
-    <div style="font-size: 1.8rem; font-weight: 700;">Total General: USD ${totalGeneral}</div>
+    <div class="resumen-total-cantidad">Total de Presupuestos: ${carrito.length}</div>
+    <div class="resumen-total-precio">Total General: USD ${totalGeneral}</div>
   `;
   
   listaCarrito.appendChild(resumenTotal);

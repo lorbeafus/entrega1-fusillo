@@ -111,12 +111,11 @@ function mostrarListaSitios() {
     
     const nombre = document.createElement('span');
     nombre.textContent = sitio.tipo;
-    nombre.style.fontWeight = '600';
+    nombre.className = 'info-item-nombre';
     
     const precio = document.createElement('span');
     precio.textContent = `USD ${sitio.precio}`;
-    precio.style.color = '#667eea';
-    precio.style.fontWeight = '700';
+    precio.className = 'info-item-precio';
     
     infoItem.appendChild(nombre);
     infoItem.appendChild(precio);
@@ -134,12 +133,11 @@ function mostrarListaExtras() {
     
     const nombre = document.createElement('span');
     nombre.textContent = extra.nombre;
-    nombre.style.fontWeight = '600';
+    nombre.className = 'info-item-nombre';
     
     const precio = document.createElement('span');
     precio.textContent = `USD ${extra.precio}`;
-    precio.style.color = '#667eea';
-    precio.style.fontWeight = '700';
+    precio.className = 'info-item-precio';
     
     infoItem.appendChild(nombre);
     infoItem.appendChild(precio);
