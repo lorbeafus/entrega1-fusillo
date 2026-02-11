@@ -54,10 +54,14 @@ h2 {
 }
 
 .menu-section {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 15px;
   margin-bottom: 30px;
+}
+
+.menu-section.active {
+  display: flex;
 }
 
 .menu-link {

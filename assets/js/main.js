@@ -28,14 +28,19 @@ const btnVolverExtras = document.getElementById('btn-volver-extras');
 const btnVolverResultado = document.getElementById('btn-volver-resultado');
 const btnNuevoPresupuesto = document.getElementById('btn-nuevo-presupuesto');
 
+const todasLasSecciones = [menuPrincipal, formPresupuesto, infoSitios, infoExtras, resultado];
+
+function mostrarSeccion(seccionAMostrar) {
+  todasLasSecciones.forEach(seccion => {
+    seccion.classList.remove('active');
+  });
+  seccionAMostrar.classList.add('active');
+}
+
 const presupuestoForm = document.getElementById('presupuesto-form');
 
 function volverAlMenu() {
-  menuPrincipal.style.display = 'flex';
-  formPresupuesto.style.display = 'none';
-  infoSitios.style.display = 'none';
-  infoExtras.style.display = 'none';
-  resultado.style.display = 'none';
+  mostrarSeccion(menuPrincipal);
 }
 
 function generarTiposSitio() {
@@ -192,9 +197,7 @@ function mostrarResultado(nombre, tipoSitio, extrasElegidos, total) {
   itemTotal.textContent = `Presupuesto Final: USD ${total}`;
   resultadoContenido.appendChild(itemTotal);
   
-  menuPrincipal.style.display = 'none';
-  formPresupuesto.style.display = 'none';
-  resultado.style.display = 'block';
+  mostrarSeccion(resultado);
   
   const fechaActual = new Date();
   const fechaFormateada = `${fechaActual.getDate()}/${fechaActual.getMonth() + 1}/${fechaActual.getFullYear()} ${fechaActual.getHours()}:${fechaActual.getMinutes()}`;
@@ -211,8 +214,7 @@ function mostrarResultado(nombre, tipoSitio, extrasElegidos, total) {
 }
 
 btnCrearPresupuesto.addEventListener('click', () => {
-  menuPrincipal.style.display = 'none';
-  formPresupuesto.style.display = 'block';
+  mostrarSeccion(formPresupuesto);
   document.getElementById('nombre-cliente').value = '';
   document.querySelectorAll('input[name="extras"]').forEach(cb => cb.checked = false);
   document.querySelector('input[name="tipo-sitio"]').checked = true;
@@ -220,14 +222,12 @@ btnCrearPresupuesto.addEventListener('click', () => {
 
 btnVerSitios.addEventListener('click', () => {
   mostrarListaSitios();
-  menuPrincipal.style.display = 'none';
-  infoSitios.style.display = 'block';
+  mostrarSeccion(infoSitios);
 });
 
 btnVerExtras.addEventListener('click', () => {
   mostrarListaExtras();
-  menuPrincipal.style.display = 'none';
-  infoExtras.style.display = 'block';
+  mostrarSeccion(infoExtras);
 });
 
 btnCancelar.addEventListener('click', volverAlMenu);
@@ -236,9 +236,7 @@ btnVolverExtras.addEventListener('click', volverAlMenu);
 btnVolverResultado.addEventListener('click', volverAlMenu);
 
 btnNuevoPresupuesto.addEventListener('click', () => {
-  menuPrincipal.style.display = 'none';
-  formPresupuesto.style.display = 'block';
-  resultado.style.display = 'none';
+  mostrarSeccion(formPresupuesto);
   document.getElementById('nombre-cliente').value = '';
   document.querySelectorAll('input[name="extras"]').forEach(cb => cb.checked = false);
   document.querySelector('input[name="tipo-sitio"]').checked = true;
