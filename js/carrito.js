@@ -23,49 +23,27 @@ function mostrarCarrito() {
   
   let totalGeneral = 0;
   
-  for (const presupuesto of carrito) {
+  carrito.forEach((presupuesto, indice) => {
     const card = document.createElement('div');
     card.className = 'historial-card';
     
-    const fecha = document.createElement('div');
-    fecha.className = 'historial-fecha';
-    fecha.textContent = presupuesto.fecha;
-    
-    const cliente = document.createElement('div');
-    cliente.className = 'historial-item';
-    cliente.innerHTML = `<strong>Cliente:</strong> ${presupuesto.nombre}`;
-    
-    const tipo = document.createElement('div');
-    tipo.className = 'historial-item';
-    tipo.innerHTML = `<strong>Tipo de Sitio:</strong> ${presupuesto.tipoSitio}`;
-    
     const extrasTexto = presupuesto.extras.length > 0 ? presupuesto.extras.join(', ') : 'Ninguno';
-    const extrasDiv = document.createElement('div');
-    extrasDiv.className = 'historial-item';
-    extrasDiv.innerHTML = `<strong>Extras:</strong> ${extrasTexto}`;
+
+    card.innerHTML = `
+      <div class="historial-fecha">${presupuesto.fecha}</div>
+      <div class="historial-item"><strong>Cliente:</strong> ${presupuesto.nombre}</div>
+      <div class="historial-item"><strong>Tipo de Sitio:</strong> ${presupuesto.tipoSitio}</div>
+      <div class="historial-item"><strong>Extras:</strong> ${extrasTexto}</div>
+      <div class="historial-total">USD ${presupuesto.total}</div>
+      <button class="btn-eliminar" data-indice="${indice}">Eliminar</button>
+    `;
     
-    const total = document.createElement('div');
-    total.className = 'historial-total';
-    total.textContent = `USD ${presupuesto.total}`;
-    
-    const btnEliminar = document.createElement('button');
-    btnEliminar.className = 'btn-eliminar';
-    btnEliminar.textContent = 'Eliminar';
-    
-    const indice = carrito.indexOf(presupuesto);
-    btnEliminar.addEventListener('click', () => eliminarPresupuesto(indice));
-    
-    card.appendChild(fecha);
-    card.appendChild(cliente);
-    card.appendChild(tipo);
-    card.appendChild(extrasDiv);
-    card.appendChild(total);
-    card.appendChild(btnEliminar);
+    //botón creado dentro del innerHTML
+    card.querySelector('.btn-eliminar').addEventListener('click', () => eliminarPresupuesto(indice));
     
     listaCarrito.appendChild(card);
-    
     totalGeneral += presupuesto.total;
-  }
+  });
   
   const resumenTotal = document.createElement('div');
   resumenTotal.className = 'resumen-total';
