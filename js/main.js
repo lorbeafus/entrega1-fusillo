@@ -51,25 +51,12 @@ function generarTiposSitio() {
     const radioOption = document.createElement('div');
     radioOption.className = 'radio-option';
     
-    const radio = document.createElement('input');
-    radio.type = 'radio';
-    radio.name = 'tipo-sitio';
-    radio.value = indice;
-    radio.id = `sitio-${indice}`;
-    if (indice === 0) radio.checked = true;
+    radioOption.innerHTML = `
+      <input type="radio" name="tipo-sitio" value="${indice}" id="sitio-${indice}" ${indice === 0 ? 'checked' : ''}>
+      <label for="sitio-${indice}" class="option-label">${sitio.tipo}</label>
+      <span class="option-price">USD ${sitio.precio}</span>
+    `;
     
-    const label = document.createElement('label');
-    label.htmlFor = `sitio-${indice}`;
-    label.className = 'option-label';
-    label.textContent = sitio.tipo;
-    
-    const precio = document.createElement('span');
-    precio.className = 'option-price';
-    precio.textContent = `USD ${sitio.precio}`;
-    
-    radioOption.appendChild(radio);
-    radioOption.appendChild(label);
-    radioOption.appendChild(precio);
     tipoSitioGroup.appendChild(radioOption);
   });
 }
@@ -79,28 +66,15 @@ function generarExtras() {
   extrasGroup.innerHTML = '';
   
   extras.forEach((extra, indice) => {
-
     const checkboxOption = document.createElement('div');
     checkboxOption.className = 'checkbox-option';
     
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.name = 'extras';
-    checkbox.value = indice;
-    checkbox.id = `extra-${indice}`;
+    checkboxOption.innerHTML = `
+      <input type="checkbox" name="extras" value="${indice}" id="extra-${indice}">
+      <label for="extra-${indice}" class="option-label">${extra.nombre}</label>
+      <span class="option-price">USD ${extra.precio}</span>
+    `;
     
-    const label = document.createElement('label');
-    label.htmlFor = `extra-${indice}`;
-    label.className = 'option-label';
-    label.textContent = extra.nombre;
-    
-    const precio = document.createElement('span');
-    precio.className = 'option-price';
-    precio.textContent = `USD ${extra.precio}`;
-    
-    checkboxOption.appendChild(checkbox);
-    checkboxOption.appendChild(label);
-    checkboxOption.appendChild(precio);
     extrasGroup.appendChild(checkboxOption);
   });
 }
@@ -109,44 +83,30 @@ function mostrarListaSitios() {
   const listaSitios = document.getElementById('lista-sitios');
   listaSitios.innerHTML = '';
   
-  for (const sitio of preciosSitio) {
+  preciosSitio.forEach(sitio => {
     const infoItem = document.createElement('div');
     infoItem.className = 'info-item';
-    
-    const nombre = document.createElement('span');
-    nombre.textContent = sitio.tipo;
-    nombre.className = 'info-item-nombre';
-    
-    const precio = document.createElement('span');
-    precio.textContent = `USD ${sitio.precio}`;
-    precio.className = 'info-item-precio';
-    
-    infoItem.appendChild(nombre);
-    infoItem.appendChild(precio);
+    infoItem.innerHTML = `
+      <span class="info-item-nombre">${sitio.tipo}</span>
+      <span class="info-item-precio">USD ${sitio.precio}</span>
+    `;
     listaSitios.appendChild(infoItem);
-  }
+  });
 }
 
 function mostrarListaExtras() {
   const listaExtras = document.getElementById('lista-extras');
   listaExtras.innerHTML = '';
   
-  for (const extra of extras) {
+  extras.forEach(extra => {
     const infoItem = document.createElement('div');
     infoItem.className = 'info-item';
-    
-    const nombre = document.createElement('span');
-    nombre.textContent = extra.nombre;
-    nombre.className = 'info-item-nombre';
-    
-    const precio = document.createElement('span');
-    precio.textContent = `USD ${extra.precio}`;
-    precio.className = 'info-item-precio';
-    
-    infoItem.appendChild(nombre);
-    infoItem.appendChild(precio);
+    infoItem.innerHTML = `
+      <span class="info-item-nombre">${extra.nombre}</span>
+      <span class="info-item-precio">USD ${extra.precio}</span>
+    `;
     listaExtras.appendChild(infoItem);
-  }
+  });
 }
 
 function calcularPresupuesto(tipoSitio, extrasElegidos) {
@@ -160,35 +120,17 @@ function guardarPresupuestoEnStorage(presupuesto) {
 
 function mostrarResultado(nombre, tipoSitio, extrasElegidos, total) {
   const resultadoContenido = document.getElementById('resultado-contenido');
-  resultadoContenido.innerHTML = '';
   
-  const itemNombre = document.createElement('div');
-  itemNombre.className = 'resultado-item';
-  itemNombre.innerHTML = `<strong>Cliente:</strong> ${nombre}`;
-  resultadoContenido.appendChild(itemNombre);
+  const mensajeExtras = extrasElegidos.length > 0 
+    ? extrasElegidos.map(extra => extra.nombre).join(', ') 
+    : 'Ninguno';
   
-  const itemTipo = document.createElement('div');
-  itemTipo.className = 'resultado-item';
-  itemTipo.innerHTML = `<strong>Tipo de sitio:</strong> ${tipoSitio.tipo}`;
-  resultadoContenido.appendChild(itemTipo);
-  
-  const itemExtras = document.createElement('div');
-  itemExtras.className = 'resultado-item';
-  let mensajeExtras = '';
-  
-  if (extrasElegidos.length > 0) {
-    mensajeExtras = extrasElegidos.map(extra => extra.nombre).join(', ');
-  } else {
-    mensajeExtras = 'Ninguno';
-  }
-  
-  itemExtras.innerHTML = `<strong>Extras:</strong> ${mensajeExtras}`;
-  resultadoContenido.appendChild(itemExtras);
-  
-  const itemTotal = document.createElement('div');
-  itemTotal.className = 'resultado-total';
-  itemTotal.textContent = `Presupuesto Final: USD ${total}`;
-  resultadoContenido.appendChild(itemTotal);
+  resultadoContenido.innerHTML = `
+    <div class="resultado-item"><strong>Cliente:</strong> ${nombre}</div>
+    <div class="resultado-item"><strong>Tipo de sitio:</strong> ${tipoSitio.tipo}</div>
+    <div class="resultado-item"><strong>Extras:</strong> ${mensajeExtras}</div>
+    <div class="resultado-total">Presupuesto Final: USD ${total}</div>
+  `;
   
   mostrarSeccion(resultado);
   
