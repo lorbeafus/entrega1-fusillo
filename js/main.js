@@ -198,6 +198,13 @@ presupuestoForm.addEventListener('submit', (e) => {
     return;
   }
   
+  // Validación de nombre: solo letras y espacios
+  const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+  if (!regexNombre.test(nombre)) {
+    alert('Por favor, ingrese un nombre válido (solo letras).');
+    return;
+  }
+  
   const tipoSeleccionado = document.querySelector('input[name="tipo-sitio"]:checked');
   const tipoSitio = preciosSitio[parseInt(tipoSeleccionado.value)];
   const extrasCheckboxes = document.querySelectorAll('input[name="extras"]:checked');
