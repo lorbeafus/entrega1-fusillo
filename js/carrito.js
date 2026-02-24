@@ -3,6 +3,7 @@ const carrito = JSON.parse(localStorage.getItem("historialPresupuestos")) || [];
 const listaCarrito = document.getElementById('lista-carrito');
 const btnLimpiarCarrito = document.getElementById('btn-limpiar-carrito');
 
+
 function mostrarCarrito() {
   listaCarrito.innerHTML = '';
   
@@ -39,10 +40,12 @@ function mostrarCarrito() {
       <div class="historial-item"><strong>Extras:</strong> ${extrasTexto}</div>
       <div class="historial-total">USD ${presupuesto.total}</div>
       <button class="btn-eliminar" data-indice="${indice}">Eliminar</button>
+      <button class="btn-editar" data-indice="${indice}">Editar</button>
     `;
     
-    //botón creado dentro del innerHTML
+    //botones creado dentro del innerHTML
     card.querySelector('.btn-eliminar').addEventListener('click', () => eliminarPresupuesto(indice));
+    card.querySelector('.btn-editar').addEventListener('click', () => editarPresupuesto(indice));
     
     listaCarrito.appendChild(card);
   });
@@ -61,6 +64,12 @@ function eliminarPresupuesto(indice) {
   carrito.splice(indice, 1);
   localStorage.setItem("historialPresupuestos", JSON.stringify(carrito));
   mostrarCarrito();
+}
+
+function editarPresupuesto(indice) {
+  const presupuesto = carrito[indice];
+  localStorage.setItem("presupuestoActual", JSON.stringify(presupuesto));
+  window.location.href = "../index.html";
 }
 
 function limpiarCarrito() {

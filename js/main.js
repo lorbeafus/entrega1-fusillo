@@ -26,6 +26,7 @@ const btnVolverSitios = document.getElementById('btn-volver-sitios');
 const btnVolverExtras = document.getElementById('btn-volver-extras');
 const btnVolverResultado = document.getElementById('btn-volver-resultado');
 const btnNuevoPresupuesto = document.getElementById('btn-nuevo-presupuesto');
+const btnEditarPresupuesto = document.getElementById('btn-editar-presupuesto');
 const todasLasSecciones = document.querySelectorAll('.menu-section, .form-section, .info-section, .resultado-section');
 
 function mostrarSeccion(seccionAMostrar) {
@@ -174,6 +175,10 @@ btnVolverSitios.addEventListener('click', volverAlMenu);
 btnVolverExtras.addEventListener('click', volverAlMenu);
 btnVolverResultado.addEventListener('click', volverAlMenu);
 
+btnEditarPresupuesto.addEventListener('click', () => {
+  mostrarSeccion(formPresupuesto);
+});
+
 btnNuevoPresupuesto.addEventListener('click', () => {
   mostrarSeccion(formPresupuesto);
   document.getElementById('nombre-cliente').value = '';
@@ -201,10 +206,50 @@ presupuestoForm.addEventListener('submit', (e) => {
   mostrarResultado(nombre, email, telefono, tipoSitio, extrasElegidos, total);
 });
 
+function cargarPresupuestoEdicion() {
+  const pEdit = JSON.parse(localStorage.getItem("presupuestoActual"));
+  
+  if (pEdit) {
+    // 1. Muestra el formulario
+    mostrarSeccion(formPresupuesto);
+    
+    // 2. Llena los campos de texto
+    document.getElementById('nombre-cliente').value = pEdit.nombre;
+    document.getElementById('email').value = pEdit.email;
+    document.getElementById('telefono').value = pEdit.telefono;
+    
+    // 3. Marca el radio del tipo de sitio
+    const radioADiv = Array.from(document.querySelectorAll('input[name="tipo-sitio"]'))
+      .find(radio => preciosSitio[radio.value].tipo === pEdit.tipoSitio);
+    if (radioADiv) radioADiv.checked = true;
+    
+    // 4. Marca los checkboxes de los extras
+    // Primero desmarca todos por seguridad
+    document.querySelectorAll('input[name="extras"]').forEach(cb => cb.checked = false);
+    
+    // Marca los que coincidan con los nombres guardados
+    pEdit.extras.forEach(extraNombre => {
+      const cb = Array.from(document.querySelectorAll('input[name="extras"]'))
+        .find(checkbox => extras[checkbox.value].nombre === extraNombre);
+      if (cb) cb.checked = true;
+    });
+    
+    // 5. Borra del storage para que no se cargue de nuevo al refrescar
+    localStorage.removeItem("presupuestoActual");
+  }
+}
+
 function inicializarApp() {
   generarTiposSitio();
   generarExtras();
-  volverAlMenu();
+  
+  // Verificamos si venimos de editar un presupuesto del carrito
+  cargarPresupuestoEdicion();
+  
+  // Si no se cargó nada para editar, volvemos al menú (esto maneja el caso por defecto)
+  if (!localStorage.getItem("presupuestoActual") && !formPresupuesto.classList.contains('active')) {
+    volverAlMenu();
+  }
 }
 
 inicializarApp();
