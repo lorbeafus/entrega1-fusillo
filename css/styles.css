@@ -423,6 +423,32 @@ h2 {
   background: #8e864d;
 }
 
+.btn-whatsapp {
+  background-color: #25d366 !important;
+  color: white !important;
+}
+
+.btn-whatsapp:hover {
+  background-color: #128c7e !important;
+}
+
+.btn-whatsapp-item {
+  margin-top: 10px;
+  margin-left: 5px;
+  padding: 8px 15px;
+  background: #25d366;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.btn-whatsapp-item:hover {
+  background: #128c7e;
+}
+
 .carrito-vacio-mensaje {
   text-align: center;
   color: #999;

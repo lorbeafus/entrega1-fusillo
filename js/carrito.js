@@ -41,11 +41,13 @@ function mostrarCarrito() {
       <div class="historial-total">USD ${presupuesto.total}</div>
       <button class="btn-eliminar" data-indice="${indice}">Eliminar</button>
       <button class="btn-editar" data-indice="${indice}">Editar</button>
+      <button class="btn-whatsapp-item" data-indice="${indice}">Consultar 💬</button>
     `;
     
     //botones creado dentro del innerHTML
     card.querySelector('.btn-eliminar').addEventListener('click', () => eliminarPresupuesto(indice));
     card.querySelector('.btn-editar').addEventListener('click', () => editarPresupuesto(indice));
+    card.querySelector('.btn-whatsapp-item').addEventListener('click', () => consultarWhatsApp(indice));
     
     listaCarrito.appendChild(card);
   });
@@ -70,6 +72,18 @@ function editarPresupuesto(indice) {
   const presupuesto = carrito[indice];
   localStorage.setItem("presupuestoActual", JSON.stringify(presupuesto));
   window.location.href = "../index.html";
+}
+
+function consultarWhatsApp(indice) {
+  const p = carrito[indice];
+  const mensaje = `¡Hola! Consulto por mi presupuesto guardado:
+- *Cliente:* ${p.nombre}
+- *Sitio:* ${p.tipoSitio}
+- *Extras:* ${p.extras.length > 0 ? p.extras.join(', ') : 'Ninguno'}
+- *Total:* USD ${p.total}`;
+
+  const url = `https://wa.me/5491121882339?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, '_blank');
 }
 
 function limpiarCarrito() {

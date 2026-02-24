@@ -131,8 +131,23 @@ function mostrarResultado(nombre, email, telefono, tipoSitio, extrasElegidos, to
     <div class="resultado-item"><strong>Tipo de sitio:</strong> ${tipoSitio.tipo}</div>
     <div class="resultado-item"><strong>Extras:</strong> ${mensajeExtras}</div>
     <div class="resultado-total">Presupuesto Final: USD ${total}</div>
+    <button class="btn btn-whatsapp" id="btn-whatsapp-consulta" style="width: 100%; margin-top: 15px;">
+        Consultar por WhatsApp 💬
+    </button>
   `;
   
+  // Agregar listener al nuevo botón de WhatsApp
+  document.getElementById('btn-whatsapp-consulta').addEventListener('click', () => {
+    const mensaje = `¡Hola! Consulto por un presupuesto:
+- *Cliente:* ${nombre}
+- *Sitio:* ${tipoSitio.tipo}
+- *Extras:* ${mensajeExtras}
+- *Total:* USD ${total}`;
+    
+    const url = `https://wa.me/5491121882339?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+  });
+
   mostrarSeccion(resultado);
   
   const fechaActual = new Date();
