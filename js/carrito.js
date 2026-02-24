@@ -39,9 +39,11 @@ function mostrarCarrito() {
       <div class="historial-item"><strong>Tipo de Sitio:</strong> ${presupuesto.tipoSitio}</div>
       <div class="historial-item"><strong>Extras:</strong> ${extrasTexto}</div>
       <div class="historial-total">USD ${presupuesto.total}</div>
-      <button class="btn-eliminar" data-indice="${indice}">Eliminar</button>
-      <button class="btn-editar" data-indice="${indice}">Editar</button>
-      <button class="btn-whatsapp-item" data-indice="${indice}">Consultar 💬</button>
+      <div class="card-actions">
+          <button class="btn-eliminar" data-indice="${indice}">Eliminar</button>
+          <button class="btn-editar" data-indice="${indice}">Editar</button>
+          <button class="btn-whatsapp-item" data-indice="${indice}">Consultar 💬</button>
+      </div>
     `;
     
     //botones creado dentro del innerHTML
