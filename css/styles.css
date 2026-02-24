@@ -19,25 +19,21 @@ h1 {
   text-align: center;
   color: #d9d9d9;
   margin-bottom: 30px;
+  padding: 0 80px; /* Espacio para que el logo no lo tape */
   font-size: 2.5rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #7e6726e9;
 }
 
 .logo {
   position: absolute;
   top: 20px;
   right: 20px;
-  width: 120px;
+  width: 75px; /* Más chico para que no moleste */
   height: auto;
   border-radius: 10px;
   background: white;
   transition: transform 0.3s ease;
+  z-index: 10;
 }
 
 .logo:hover {
@@ -490,12 +486,6 @@ h2 {
 
   .btn-group {
     flex-direction: column;
-  }
-
-  .logo {
-    width: 60px;
-    top: 15px;
-    right: 15px;
   }
 }
 
