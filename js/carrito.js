@@ -21,7 +21,8 @@ function mostrarCarrito() {
     return;
   }
   
-  let totalGeneral = 0;
+  //Calculo del total antes de renderizar
+  const totalGeneral = carrito.reduce((total, p) => total + p.total, 0);
   
   carrito.forEach((presupuesto, indice) => {
     const card = document.createElement('div');
@@ -32,6 +33,8 @@ function mostrarCarrito() {
     card.innerHTML = `
       <div class="historial-fecha">${presupuesto.fecha}</div>
       <div class="historial-item"><strong>Cliente:</strong> ${presupuesto.nombre}</div>
+      <div class="historial-item"><strong>Email:</strong> ${presupuesto.email}</div>
+      <div class="historial-item"><strong>Teléfono:</strong> ${presupuesto.telefono}</div>
       <div class="historial-item"><strong>Tipo de Sitio:</strong> ${presupuesto.tipoSitio}</div>
       <div class="historial-item"><strong>Extras:</strong> ${extrasTexto}</div>
       <div class="historial-total">USD ${presupuesto.total}</div>
@@ -42,7 +45,6 @@ function mostrarCarrito() {
     card.querySelector('.btn-eliminar').addEventListener('click', () => eliminarPresupuesto(indice));
     
     listaCarrito.appendChild(card);
-    totalGeneral += presupuesto.total;
   });
   
   const resumenTotal = document.createElement('div');

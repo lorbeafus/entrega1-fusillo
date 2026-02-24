@@ -21,14 +21,12 @@ const resultado = document.getElementById('resultado');
 const btnCrearPresupuesto = document.getElementById('btn-crear-presupuesto');
 const btnVerSitios = document.getElementById('btn-ver-sitios');
 const btnVerExtras = document.getElementById('btn-ver-extras');
-
 const btnCancelar = document.getElementById('btn-cancelar');
 const btnVolverSitios = document.getElementById('btn-volver-sitios');
 const btnVolverExtras = document.getElementById('btn-volver-extras');
 const btnVolverResultado = document.getElementById('btn-volver-resultado');
 const btnNuevoPresupuesto = document.getElementById('btn-nuevo-presupuesto');
-
-const todasLasSecciones = [menuPrincipal, formPresupuesto, infoSitios, infoExtras, resultado];
+const todasLasSecciones = document.querySelectorAll('.menu-section, .form-section, .info-section, .resultado-section');
 
 function mostrarSeccion(seccionAMostrar) {
   todasLasSecciones.forEach(seccion => {
@@ -118,7 +116,7 @@ function guardarPresupuestoEnStorage(presupuesto) {
   localStorage.setItem("historialPresupuestos", JSON.stringify(historialPresupuestos));
 }
 
-function mostrarResultado(nombre, tipoSitio, extrasElegidos, total) {
+function mostrarResultado(nombre, email, telefono, tipoSitio, extrasElegidos, total) {
   const resultadoContenido = document.getElementById('resultado-contenido');
   
   const mensajeExtras = extrasElegidos.length > 0 
@@ -127,6 +125,8 @@ function mostrarResultado(nombre, tipoSitio, extrasElegidos, total) {
   
   resultadoContenido.innerHTML = `
     <div class="resultado-item"><strong>Cliente:</strong> ${nombre}</div>
+    <div class="resultado-item"><strong>Email:</strong> ${email}</div>
+    <div class="resultado-item"><strong>Teléfono:</strong> ${telefono}</div>
     <div class="resultado-item"><strong>Tipo de sitio:</strong> ${tipoSitio.tipo}</div>
     <div class="resultado-item"><strong>Extras:</strong> ${mensajeExtras}</div>
     <div class="resultado-total">Presupuesto Final: USD ${total}</div>
@@ -139,6 +139,8 @@ function mostrarResultado(nombre, tipoSitio, extrasElegidos, total) {
   
   const presupuesto = {
     nombre: nombre,
+    email: email,
+    telefono: telefono,
     tipoSitio: tipoSitio.tipo,
     extras: extrasElegidos.map(extra => extra.nombre),
     total: total,
@@ -151,6 +153,8 @@ function mostrarResultado(nombre, tipoSitio, extrasElegidos, total) {
 btnCrearPresupuesto.addEventListener('click', () => {
   mostrarSeccion(formPresupuesto);
   document.getElementById('nombre-cliente').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('telefono').value = '';
   document.querySelectorAll('input[name="extras"]').forEach(cb => cb.checked = false);
   document.querySelector('input[name="tipo-sitio"]').checked = true;
 });
@@ -173,6 +177,8 @@ btnVolverResultado.addEventListener('click', volverAlMenu);
 btnNuevoPresupuesto.addEventListener('click', () => {
   mostrarSeccion(formPresupuesto);
   document.getElementById('nombre-cliente').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('telefono').value = '';
   document.querySelectorAll('input[name="extras"]').forEach(cb => cb.checked = false);
   document.querySelector('input[name="tipo-sitio"]').checked = true;
 });
@@ -180,15 +186,19 @@ btnNuevoPresupuesto.addEventListener('click', () => {
 presupuestoForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const nombre = document.getElementById('nombre-cliente').value.trim();
-  if (nombre === '') {
+  const email = document.getElementById('email').value.trim();
+  const telefono = document.getElementById('telefono').value.trim();
+  
+  if (nombre === '' || email === '' || telefono === '') {
     return;
   }
+  
   const tipoSeleccionado = document.querySelector('input[name="tipo-sitio"]:checked');
   const tipoSitio = preciosSitio[parseInt(tipoSeleccionado.value)];
   const extrasCheckboxes = document.querySelectorAll('input[name="extras"]:checked');
   const extrasElegidos = Array.from(extrasCheckboxes).map(checkbox => extras[parseInt(checkbox.value)]);
   const total = calcularPresupuesto(tipoSitio, extrasElegidos);
-  mostrarResultado(nombre, tipoSitio, extrasElegidos, total);
+  mostrarResultado(nombre, email, telefono, tipoSitio, extrasElegidos, total);
 });
 
 function inicializarApp() {
