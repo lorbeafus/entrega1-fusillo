@@ -47,8 +47,7 @@ function generarTiposSitio() {
   const tipoSitioGroup = document.getElementById('tipo-sitio-group');
   tipoSitioGroup.innerHTML = '';
   
-  for (const sitio of preciosSitio) {
-    const indice = preciosSitio.indexOf(sitio);
+  preciosSitio.forEach((sitio, indice) => {
     const radioOption = document.createElement('div');
     radioOption.className = 'radio-option';
     
@@ -72,15 +71,15 @@ function generarTiposSitio() {
     radioOption.appendChild(label);
     radioOption.appendChild(precio);
     tipoSitioGroup.appendChild(radioOption);
-  }
+  });
 }
 
 function generarExtras() {
   const extrasGroup = document.getElementById('extras-group');
   extrasGroup.innerHTML = '';
   
-  for (const extra of extras) {
-    const indice = extras.indexOf(extra);
+  extras.forEach((extra, indice) => {
+
     const checkboxOption = document.createElement('div');
     checkboxOption.className = 'checkbox-option';
     
@@ -103,7 +102,7 @@ function generarExtras() {
     checkboxOption.appendChild(label);
     checkboxOption.appendChild(precio);
     extrasGroup.appendChild(checkboxOption);
-  }
+  });
 }
 
 function mostrarListaSitios() {
@@ -151,13 +150,7 @@ function mostrarListaExtras() {
 }
 
 function calcularPresupuesto(tipoSitio, extrasElegidos) {
-  let total = tipoSitio.precio;
-  
-  for (let extra of extrasElegidos) {
-    total += extra.precio;
-  }
-  
-  return total;
+  return extrasElegidos.reduce((total, extra) => total + extra.precio, tipoSitio.precio);
 }
 
 function guardarPresupuestoEnStorage(presupuesto) {
@@ -244,25 +237,15 @@ btnNuevoPresupuesto.addEventListener('click', () => {
 
 presupuestoForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  
   const nombre = document.getElementById('nombre-cliente').value.trim();
-  
   if (nombre === '') {
     return;
   }
-  
   const tipoSeleccionado = document.querySelector('input[name="tipo-sitio"]:checked');
   const tipoSitio = preciosSitio[parseInt(tipoSeleccionado.value)];
-  
   const extrasCheckboxes = document.querySelectorAll('input[name="extras"]:checked');
-  const extrasElegidos = [];
-  
-  for (const checkbox of extrasCheckboxes) {
-    extrasElegidos.push(extras[parseInt(checkbox.value)]);
-  }
-  
+  const extrasElegidos = Array.from(extrasCheckboxes).map(checkbox => extras[parseInt(checkbox.value)]);
   const total = calcularPresupuesto(tipoSitio, extrasElegidos);
-  
   mostrarResultado(nombre, tipoSitio, extrasElegidos, total);
 });
 
